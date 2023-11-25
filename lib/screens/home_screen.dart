@@ -12,20 +12,20 @@ import 'package:weather_app/controller/weather_controller.dart';
 import 'saved_locations_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  String? title;
-  HomeScreen({super.key, required this.title});
+  String? cityName;
+  HomeScreen({super.key, this.cityName});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  AnimationController? animationController;
+  late AnimationController animationController;
 
   WeatherController weatherController = Get.put(WeatherController());
 
   fetchWeather() async {
-    String cityName = await weatherController.getCurrentLocation();
+    String cityName = widget.cityName == null ? await weatherController.getCurrentLocation() : widget.cityName.toString();
     try {
       await weatherController.getWeather(cityName);
     } catch (e) {
@@ -38,7 +38,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
     fetchWeather();
     animationController = AnimationController(vsync: this, duration: const Duration(seconds: 5));
-    animationController!.forward();
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -110,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          weatherController.temperature.value,
+                          double.parse(weatherController.temperature.value).round().toString(),
                           style: TextStyle(fontSize: 80.sp, fontWeight: FontWeight.w500, color: Colors.white),
                         ),
                         Text(
@@ -133,9 +140,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             forecastData: weatherController.finalForecasts.value,
                           )
                         : Container()),
-                    // SizedBox(
-                    //   height: 25.h,
-                    // ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
                   ],
                 )),
         ),

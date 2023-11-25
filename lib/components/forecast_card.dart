@@ -32,18 +32,12 @@ class _ForecastCardState extends State<ForecastCard> {
               DateTime timeStamp = DateTime.parse(widget.forecastData![index]["dt_txt"]);
               String formattedDate = DateFormat('EE d').format(timeStamp);
 
-              dynamic temp = double.parse(widget.forecastData![index]['main']['temp'].toString());
-              String temperature = temp.toString().substring(0, temp.toString().indexOf('.'));
-
+              String temperature = double.parse(widget.forecastData![index]['main']['temp'].toString()).round().toString();
               String speed = widget.forecastData![index]["wind"]['speed'].toString();
-              String windSpeed = ((double.parse(speed.toString()) * 3600) / 1000).toString();
-              String finalSpeed = windSpeed.substring(0, windSpeed.indexOf('.'));
+              String windSpeed = ((double.parse(speed.toString()) * 3600) / 1000).round().toString();
+              String icon = widget.forecastData![index]["weather"][0]['icon'].toString();
 
-              return ForecastComponent(
-                  date: formattedDate,
-                  icon: widget.forecastData![index]["weather"][0]['icon'].toString(),
-                  text: temperature,
-                  value: finalSpeed);
+              return ForecastComponent(date: formattedDate, icon: icon, temp: temperature, speed: windSpeed);
             }));
   }
 }

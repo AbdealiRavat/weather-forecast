@@ -26,9 +26,12 @@ class _WeatherCardState extends State<WeatherCard> {
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(vertical: 8.h),
         children: [
-          WeatherComponent(icon: 'assets/humidity.png', text: 'HUMIDITY', value: '${widget.value!.main!.humidity}%'),
+          WeatherComponent(icon: 'assets/humidity.png', text: 'HUMIDITY', value: '${weatherController.humidity}%'),
           WeatherComponent(icon: 'assets/wind.png', text: 'WIND', value: '${weatherController.finalSpeed.value} km/h'),
-          WeatherComponent(icon: 'assets/temp.png', text: 'FEELS LIKE', value: '${weatherController.feelsLike.value}\u00B0')
+          WeatherComponent(
+              icon: 'assets/temp.png',
+              text: 'FEELS LIKE',
+              value: '${double.parse(weatherController.feelsLike.value).round()}\u00B0')
         ],
       ),
 

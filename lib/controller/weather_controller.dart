@@ -21,9 +21,8 @@ class WeatherController extends GetxController {
   RxString formattedTime = ''.obs;
   RxString icon = ''.obs;
   RxString weather = ''.obs;
-  dynamic temp = '';
   RxString temperature = ''.obs;
-  String feels = '';
+  RxString humidity = ''.obs;
   RxString feelsLike = ''.obs;
   String speed = '';
   String windSpeed = '';
@@ -43,17 +42,17 @@ class WeatherController extends GetxController {
       formattedTime.value = DateFormat('dd/MM/yyy hh:mm a').format(timeStamp);
       icon.value = model.weather![0].icon!.toString();
       weather.value = model.weather![0].main!.toString();
-      temp = double.parse(model.main!.temp.toString());
-      temperature.value = temp.toString().substring(0, temp.toString().indexOf('.'));
-      feels = model.main!.feelsLike.toString();
-      feelsLike.value = feels.substring(0, feels.indexOf('.'));
+      temperature.value = model.main!.temp.toString();
+      humidity.value = model.main!.humidity.toString();
+      feelsLike.value = model.main!.feelsLike.toString();
 
       speed = model.wind!.speed.toString();
       windSpeed = ((double.parse(speed.toString()) * 3600) / 1000).toString();
       finalSpeed.value = windSpeed.substring(0, windSpeed.indexOf('.'));
 
       weatherData(model);
-      getWeatherForecast(model.coord!.lat, model.coord!.lon);
+      finalForecasts.clear();
+      await getWeatherForecast(model.coord!.lat, model.coord!.lon);
     } else {
       throw Exception('Failed to get data');
     }
@@ -101,6 +100,7 @@ class WeatherController extends GetxController {
   }
 
   List<dynamic> filterForecast(List<dynamic> forecasts) {
+    // This will display weather forecast for time 12:00 PM
     return forecasts.where((forecast) {
       final DateTime dateTime = DateTime.parse(forecast['dt_txt']);
       return dateTime.hour == 12 && dateTime.minute == 0;

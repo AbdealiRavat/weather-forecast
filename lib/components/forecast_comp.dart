@@ -8,9 +8,9 @@ import '../controller/weather_controller.dart';
 class ForecastComponent extends StatelessWidget {
   String date;
   String icon;
-  String text;
-  String value;
-  ForecastComponent({super.key, required this.date, required this.icon, required this.text, required this.value});
+  String temp;
+  String speed;
+  ForecastComponent({super.key, required this.date, required this.icon, required this.temp, required this.speed});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,14 @@ class ForecastComponent extends StatelessWidget {
             height: 8.h,
           ),
           Text(
-            '$text\u00B0',
+            '$temp\u00B0',
             style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, color: Colors.white),
           ),
           SizedBox(
             height: 3.h,
           ),
           Text(
-            '$value km/h',
+            '$speed km/h',
             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.white),
           ),
         ],
