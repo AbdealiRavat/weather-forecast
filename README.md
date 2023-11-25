@@ -27,13 +27,12 @@ To run this project locally, follow these steps:
    git clone https://github.com/your-username/weather-forecast.git
    cd weather-forecast
 
-
 2. **Fetch the dependencies:**
-
    ```
    flutter pub get
    ```
- 3. **Run the app:**
+   
+3. **Run the app:**
     
    ```
    flutter run
