@@ -34,10 +34,10 @@ To run this project locally, follow these steps:
    flutter pub get
    ```
  3. **Run the app:**
-
-    ```
+    
+   ```
    flutter run
-   ``` 
+   ```
 
 ## Contributing
 
