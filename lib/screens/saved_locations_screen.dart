@@ -58,7 +58,7 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
               ListView.builder(
                   shrinkWrap: true,
                   itemCount: locationListModel.length + 1,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     for (var location in locationListModel) {
                       locationsList.add(location.cityName);

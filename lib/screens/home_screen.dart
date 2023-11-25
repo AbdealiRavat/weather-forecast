@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, invalid_use_of_protected_member
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       await weatherController.getWeather(cityName);
     } catch (e) {
-      print(e.toString());
+      throw e.toString();
     }
   }
 
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light),
+        value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light),
         child: Container(
           height: MediaQuery.sizeOf(context).height,
           width: MediaQuery.sizeOf(context).width,
@@ -71,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     myAppbar(() async {
                       setState(() {
                         animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 2200));
-                        animationController!.forward();
+                        animationController.forward();
                       });
                       Timer(const Duration(milliseconds: 500), () {
                         Get.to(() => const SavedLocationsScreen());

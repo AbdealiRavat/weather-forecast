@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +25,7 @@ class _ForecastCardState extends State<ForecastCard> {
         constraints: BoxConstraints(maxHeight: 150.h, maxWidth: 345.w),
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         margin: EdgeInsets.symmetric(horizontal: 10.w),
-        decoration: BoxDecoration(color: Color(0xff535353).withOpacity(0.7), borderRadius: BorderRadius.circular(20.r)),
+        decoration: BoxDecoration(color: const Color(0xff535353).withOpacity(0.7), borderRadius: BorderRadius.circular(20.r)),
         child: ListView.builder(
             itemCount: widget.forecastData!.length,
             shrinkWrap: true,

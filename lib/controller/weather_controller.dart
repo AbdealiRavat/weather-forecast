@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:geocoding/geocoding.dart';
@@ -35,7 +37,7 @@ class WeatherController extends GetxController {
     final response = await http.get(Uri.parse('${BASE_URL}weather?q=$cityName&appid=$apiKey&units=metric'));
 
     if (response.statusCode == 200) {
-      WeatherModel model = await WeatherModel.fromJson(json.decode(response.body));
+      WeatherModel model = WeatherModel.fromJson(json.decode(response.body));
       name.value = model.name!;
       timeStamp = DateTime.fromMillisecondsSinceEpoch(model.dt!.toInt() * 1000);
       formattedDate.value = DateFormat('EE d').format(timeStamp);
@@ -62,7 +64,7 @@ class WeatherController extends GetxController {
     final response = await http.get(Uri.parse('${BASE_URL}weather?q=$cityName&appid=$apiKey&units=metric'));
 
     if (response.statusCode == 200) {
-      WeatherModel model = await WeatherModel.fromJson(json.decode(response.body));
+      WeatherModel model = WeatherModel.fromJson(json.decode(response.body));
 
       weatherListData(model);
     } else {
