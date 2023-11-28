@@ -7,6 +7,4 @@ class LocationListController extends GetxController {
   RxList locationWind = [].obs;
   RxList locationTemp = [].obs;
   RxList locationIcon = [].obs;
-
-  getLocationList() {}
 }

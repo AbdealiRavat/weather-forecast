@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/models/location_list_model.dart';
 import 'package:weather_app/screens/home_screen.dart';
 import 'package:weather_app/screens/location_list_screen.dart';
 
@@ -16,31 +15,10 @@ class SavedLocationsScreen extends StatefulWidget {
 }
 
 class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
-  // WeatherController weatherController = Get.put(WeatherController());
   LocationListController locationListController = Get.put(LocationListController());
-  List locationsList = [];
-  String location = '';
-  // fetchWeather() async {
-  //   try {
-  //     await weatherController.getWeather(locationsList[0]);
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
-  //
-  // @override
-  // void initState() {
-  //   fetchWeather();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
-    List<LocationListModel> locationListModel = [
-      LocationListModel(icon: '02d', cityName: 'London', weather: 'Sunny', humidity: '67', wind: '55', temp: '12'),
-      LocationListModel(icon: '50dn', cityName: 'Paris', weather: 'Clear', humidity: '25', wind: '89', temp: '5'),
-      LocationListModel(icon: '10n', cityName: 'New York', weather: 'Rain', humidity: '55', wind: '23', temp: '9'),
-    ];
     return Scaffold(
       body: Container(
         height: MediaQuery.sizeOf(context).height,
@@ -149,7 +127,7 @@ Widget _myAppBar() {
 Widget addNewButton() {
   return InkWell(
     onTap: () {
-      Get.to(() => LocationListScreen());
+      Get.to(() => const LocationListScreen());
     },
     child: Column(
       children: [

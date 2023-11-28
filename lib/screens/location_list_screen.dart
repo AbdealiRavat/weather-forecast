@@ -7,7 +7,7 @@ import '../models/all_locations_model.dart';
 import 'home_screen.dart';
 
 class LocationListScreen extends StatefulWidget {
-  LocationListScreen({super.key});
+  const LocationListScreen({super.key});
 
   @override
   State<LocationListScreen> createState() => _LocationListScreenState();
@@ -27,7 +27,6 @@ class _LocationListScreenState extends State<LocationListScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       body: ListView(
-        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.fromLTRB(20.w, 50.h, 20.w, 10.h),
         children: [
           _myAppBar(),
@@ -52,7 +51,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
                       children: [
                         Text(
                           allLocationListModel[index].cityName.toString(),
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
                         Divider(
                           color: Colors.grey.withOpacity(0.5),
