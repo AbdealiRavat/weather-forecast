@@ -41,6 +41,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
                     Get.to(() => HomeScreen(
                           cityName: allLocationListModel[index].cityName,
                         ));
+                    locationListController.locationList.add(allLocationListModel[index].cityName);
                   },
                   child: Container(
                     // height: 20.h,
