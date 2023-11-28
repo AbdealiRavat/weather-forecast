@@ -132,4 +132,14 @@ class WeatherController extends GetxController {
     };
     return 'assets/lottie/${iconPaths[icon] ?? '01d'}.json';
   }
+
+  String getbackgroundPath(String img) {
+    final imgPaths = {
+      'London': 'wallpaper2.jpg',
+      'Paris': 'wallpaper.jpg',
+      'New York': 'wallpaper3.jpg',
+      'Mumbai': 'wallpaper4.jpg',
+    };
+    return 'assets/${imgPaths[img] ?? 'wallpaper0.jpg'}';
+  }
 }

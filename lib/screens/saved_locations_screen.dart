@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/models/location_list_model.dart';
 import 'package:weather_app/screens/home_screen.dart';
+import 'package:weather_app/screens/location_list_screen.dart';
 
 import '../components/location_list_title.dart';
+import '../controller/location_list_controller.dart';
 
 class SavedLocationsScreen extends StatefulWidget {
   const SavedLocationsScreen({super.key});
@@ -15,6 +17,7 @@ class SavedLocationsScreen extends StatefulWidget {
 
 class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
   // WeatherController weatherController = Get.put(WeatherController());
+  LocationListController locationListController = Get.put(LocationListController());
   List locationsList = [];
   String location = '';
   // fetchWeather() async {
@@ -39,49 +42,88 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
       LocationListModel(icon: '10n', cityName: 'New York', weather: 'Rain', humidity: '55', wind: '23', temp: '9'),
     ];
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.sizeOf(context).height,
-            width: MediaQuery.sizeOf(context).width,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xff391A49), Color(0xff262171), Color(0xff391A49)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter)),
-          ),
-          ListView(
-            // physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(20.w, 50.h, 20.w, 10.h),
-            children: [
-              _myAppBar(),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: locationListModel.length + 1,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    for (var location in locationListModel) {
-                      locationsList.add(location.cityName);
-                    }
-                    return index == 3
-                        ? addNewButton()
-                        : LocationListTile(
-                            icon: locationListModel[index].icon.toString(),
-                            onTap: () {
-                              Get.offAll(() => HomeScreen(
-                                    cityName: locationListModel[index].cityName,
-                                  ));
-                              // Navigator.pop(context, locationsList[0]);
-                            },
-                            cityName: locationListModel[index].cityName.toString(),
-                            weather: locationListModel[index].weather.toString(),
-                            humidity: locationListModel[index].humidity.toString(),
-                            wind: locationListModel[index].wind.toString(),
-                            temp: locationListModel[index].temp.toString());
-                  })
-            ],
-          ),
-        ],
+      body: Container(
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color(0xff391A49), Color(0xff262171), Color(0xff391A49)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter)),
+        child: ListView(
+          // physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(20.w, 50.h, 20.w, 10.h),
+          children: [
+            _myAppBar(),
+            InkWell(
+              onTap: () {
+                Get.to(() => HomeScreen());
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: 8.w,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.white.withOpacity(0.28), const Color(0xffaaa5a5).withOpacity(0.28)],
+                    ),
+                    borderRadius: BorderRadius.circular(18.r)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Current Location',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18.sp),
+                    ),
+                    Icon(
+                      Icons.gps_fixed,
+                      color: Colors.white,
+                      size: 25.h,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: locationListController.locationList.length + 1,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  // for (var location in locationListModel) {
+                  //   locationsList.add(location.cityName);
+                  // }
+                  print(locationListController.locationWind);
+                  print(locationListController.locationList);
+                  print(locationListController.locationHumidty);
+                  print(locationListController.locationIcon);
+                  print(locationListController.locationTemp);
+                  print(locationListController.locationWeather);
+                  return index == locationListController.locationList.length
+                      ? addNewButton()
+                      : LocationListTile(
+                          icon: locationListController.locationIcon[index].toString(),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen(
+                                          cityName: locationListController.locationList[index],
+                                        )));
+                            // Get.to(
+                            //   () => HomeScreen(
+                            //     cityName: locationListController.locationList[index],
+                            //   ),
+                            // );
+                          },
+                          cityName: locationListController.locationList[index].toString(),
+                          weather: locationListController.locationWeather[index].toString(),
+                          humidity: locationListController.locationHumidty[index].toString(),
+                          wind: locationListController.locationWind[index].toString(),
+                          temp: locationListController.locationTemp[index].toString());
+                })
+          ],
+        ),
       ),
     );
   }
@@ -116,24 +158,36 @@ Widget _myAppBar() {
 }
 
 Widget addNewButton() {
-  return Container(
-    height: 60.h,
-    margin: EdgeInsets.symmetric(vertical: 10.h),
-    decoration: BoxDecoration(color: Colors.white.withOpacity(0.28), borderRadius: BorderRadius.circular(24.r)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+  return InkWell(
+    onTap: () {
+      Get.to(() => LocationListScreen());
+    },
+    child: Column(
       children: [
-        Image.asset(
-          'assets/add.png',
-          height: 24.h,
-          color: Colors.white,
+        Container(
+          height: 60.h,
+          margin: EdgeInsets.symmetric(vertical: 10.h),
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.28), borderRadius: BorderRadius.circular(24.r)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/add.png',
+                height: 24.h,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Text(
+                'Add New',
+                style: TextStyle(color: Colors.white, fontSize: 20.sp, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
         SizedBox(
-          width: 10.w,
-        ),
-        Text(
-          'Add New',
-          style: TextStyle(color: Colors.white, fontSize: 20.sp, fontWeight: FontWeight.w500),
+          height: 30.w,
         ),
       ],
     ),

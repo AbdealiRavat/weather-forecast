@@ -9,13 +9,17 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/components/forecast_card.dart';
 import 'package:weather_app/components/weather_card.dart';
+import 'package:weather_app/controller/location_list_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 
 import 'saved_locations_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   String? cityName;
-  HomeScreen({super.key, this.cityName});
+  HomeScreen({
+    super.key,
+    this.cityName,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,20 +29,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController animationController;
 
   WeatherController weatherController = Get.put(WeatherController());
+  LocationListController locationListController = Get.put(LocationListController());
 
   fetchWeather() async {
     String cityName = widget.cityName == null ? await weatherController.getCurrentLocation() : widget.cityName.toString();
+    // String cityName = widget.cityName == null ? 'dubai' : widget.cityName.toString();
     try {
-      await weatherController.getWeather(cityName);
+      await weatherController.getWeather(cityName).then((value) {
+        if (widget.cityName != null) {
+          locationListController.locationHumidty.value.add(weatherController.humidity.toString());
+          locationListController.locationTemp.value.add(weatherController.temperature.toString());
+          locationListController.locationWeather.value.add(weatherController.weather.toString());
+          locationListController.locationWind.value.add(weatherController.finalSpeed.toString());
+          locationListController.locationIcon.value.add(weatherController.icon.toString());
+        }
+      });
     } catch (e) {
       throw e.toString();
     }
   }
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     fetchWeather();
+
     animationController = AnimationController(vsync: this, duration: const Duration(seconds: 5));
     animationController.forward();
   }
@@ -58,10 +73,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: Container(
           height: MediaQuery.sizeOf(context).height,
           width: MediaQuery.sizeOf(context).width,
-          decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/wallpaper.jpg'), fit: BoxFit.cover, opacity: 0.45),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(weatherController.getbackgroundPath(widget.cityName.toString())),
+                  fit: BoxFit.cover,
+                  opacity: 0.45),
               color: Colors.black
-              //     gradient: LinearGradient(colors: [Color(0xff302b63), Color(0xff24243e)]   , begin: Alignment.topLeft),
+              //     gradient: LinearGradient(colors: [Color(0xff302b63), Color(0xff24243e)], begin: Alignment.topLeft),
               ),
           child: Obx(() => weatherController.name.isEmpty
               ? const Center(child: CircularProgressIndicator())

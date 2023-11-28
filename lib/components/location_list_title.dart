@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../controller/weather_controller.dart';
 
 class LocationListTile extends StatelessWidget {
   String icon;
@@ -23,6 +26,7 @@ class LocationListTile extends StatelessWidget {
     required this.temp,
   });
 
+  WeatherController weatherController = Get.put(WeatherController());
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -86,7 +90,7 @@ class LocationListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Lottie.asset(
-                  'assets/lottie/$icon.json',
+                  weatherController.getLottiePath(icon),
                   width: 55.w,
                   height: 55.h,
                 ),
@@ -95,7 +99,7 @@ class LocationListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      temp,
+                      double.parse(temp).round().toString(),
                       style: TextStyle(fontSize: 48.sp, fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                     Text(
