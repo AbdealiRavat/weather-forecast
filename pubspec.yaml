@@ -38,6 +38,7 @@ flutter:
   assets:
     - assets/
     - assets/lottie/
+    - assets/wallpapers/
   #   - images/a_dot_ham.jpeg
 
   # fonts:

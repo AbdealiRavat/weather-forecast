@@ -93,12 +93,6 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                   // for (var location in locationListModel) {
                   //   locationsList.add(location.cityName);
                   // }
-                  print(locationListController.locationWind);
-                  print(locationListController.locationList);
-                  print(locationListController.locationHumidty);
-                  print(locationListController.locationIcon);
-                  print(locationListController.locationTemp);
-                  print(locationListController.locationWeather);
                   return index == locationListController.locationList.length
                       ? addNewButton()
                       : LocationListTile(
@@ -110,11 +104,6 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                                     builder: (context) => HomeScreen(
                                           cityName: locationListController.locationList[index],
                                         )));
-                            // Get.to(
-                            //   () => HomeScreen(
-                            //     cityName: locationListController.locationList[index],
-                            //   ),
-                            // );
                           },
                           cityName: locationListController.locationList[index].toString(),
                           weather: locationListController.locationWeather[index].toString(),

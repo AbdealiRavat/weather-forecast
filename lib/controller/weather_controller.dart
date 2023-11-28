@@ -140,6 +140,6 @@ class WeatherController extends GetxController {
       'New York': 'wallpaper3.jpg',
       'Mumbai': 'wallpaper4.jpg',
     };
-    return 'assets/${imgPaths[img] ?? 'wallpaper0.jpg'}';
+    return 'assets/wallpapers/${imgPaths[img] ?? 'wallpaper0.jpg'}';
   }
 }
