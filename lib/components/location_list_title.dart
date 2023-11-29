@@ -50,7 +50,7 @@ class LocationListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  cityName,
+                  cityName.capitalizeFirst.toString(),
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 24.sp),
                 ),
                 Text(
