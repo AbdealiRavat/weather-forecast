@@ -38,12 +38,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // String cityName = widget.cityName == null ? 'dubai' : widget.cityName.toString();
     try {
       await weatherController.getWeather(cityName).then((value) {
-        if (widget.cityName != null) {
-          locationListController.locationHumidty.value.add(weatherController.humidity.toString());
-          locationListController.locationTemp.value.add(weatherController.temperature.toString());
-          locationListController.locationWeather.value.add(weatherController.weather.toString());
-          locationListController.locationWind.value.add(weatherController.finalSpeed.toString());
-          locationListController.locationIcon.value.add(weatherController.icon.toString());
+        locationListController.locationHumidty.value.add(weatherController.humidity.toString());
+        locationListController.locationTemp.value.add(weatherController.temperature.toString());
+        locationListController.locationWeather.value.add(weatherController.weather.toString());
+        locationListController.locationWind.value.add(weatherController.finalSpeed.toString());
+        locationListController.locationIcon.value.add(weatherController.icon.toString());
+        if (widget.cityName == null) {
+          locationListController.locationList.add(cityName);
         }
       });
     } catch (e) {

@@ -5,6 +5,7 @@ import 'package:weather_app/screens/home_screen.dart';
 import 'package:weather_app/screens/location_list_screen.dart';
 
 import '../components/location_list_title.dart';
+import '../components/toast.dart';
 import '../controller/location_list_controller.dart';
 
 class SavedLocationsScreen extends StatefulWidget {
@@ -33,36 +34,36 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
           padding: EdgeInsets.fromLTRB(20.w, 50.h, 20.w, 10.h),
           children: [
             _myAppBar(),
-            InkWell(
-              onTap: () {
-                Get.to(() => HomeScreen());
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 8.w,
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.white.withOpacity(0.28), const Color(0xffaaa5a5).withOpacity(0.28)],
-                    ),
-                    borderRadius: BorderRadius.circular(18.r)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Current Location',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18.sp),
-                    ),
-                    Icon(
-                      Icons.gps_fixed,
-                      color: Colors.white,
-                      size: 25.h,
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(() => HomeScreen());
+            //   },
+            //   child: Container(
+            //     margin: EdgeInsets.symmetric(
+            //       vertical: 8.w,
+            //     ),
+            //     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            //     decoration: BoxDecoration(
+            //         gradient: LinearGradient(
+            //           colors: [Colors.white.withOpacity(0.28), const Color(0xffaaa5a5).withOpacity(0.28)],
+            //         ),
+            //         borderRadius: BorderRadius.circular(18.r)),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text(
+            //           'Current Location',
+            //           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18.sp),
+            //         ),
+            //         Icon(
+            //           Icons.gps_fixed,
+            //           color: Colors.white,
+            //           size: 25.h,
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
             ListView.builder(
                 shrinkWrap: true,
                 itemCount: locationListController.locationList.length + 1,
@@ -75,6 +76,7 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                       ? addNewButton()
                       : LocationListTile(
                           icon: locationListController.locationIcon[index].toString(),
+                          index: index,
                           onTap: () {
                             Navigator.pushReplacement(
                                 context,
@@ -82,6 +84,19 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                                     builder: (context) => HomeScreen(
                                           cityName: locationListController.locationList[index],
                                         )));
+                          },
+                          onLongPress: () {
+                            if (index != 0) {
+                              // locationListController.locationList.removeAt(index);
+                              // locationListController.locationWeather.removeAt(index);
+                              // locationListController.locationTemp.removeAt(index);
+                              // locationListController.locationIcon.removeAt(index);
+                              // locationListController.locationHumidty.removeAt(index);
+                              // locationListController.locationWind.removeAt(index);
+                              // setState(() {});
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(Toast('Current Location'));
+                            }
                           },
                           cityName: locationListController.locationList[index].toString(),
                           weather: locationListController.locationWeather[index].toString(),
@@ -101,25 +116,9 @@ Widget _myAppBar() {
     margin: EdgeInsets.only(top: 30.h),
     // color: Colors.red.shade200,
     height: 50.h,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Text(
-              'Saved Locations',
-              style: TextStyle(color: Colors.white, fontSize: 18.sp),
-            ),
-          ],
-        ),
-        InkWell(
-          child: Image.asset(
-            'assets/search.png',
-            height: 25.h,
-            color: Colors.white,
-          ),
-        ),
-      ],
+    child: Text(
+      'Saved Locations',
+      style: TextStyle(color: Colors.white, fontSize: 18.sp),
     ),
   );
 }

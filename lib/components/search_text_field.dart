@@ -24,7 +24,7 @@ class SearchTextField extends StatelessWidget {
               controller: controller,
               maxLines: 1,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
               ],
               cursorColor: Colors.grey.shade800,
               style: TextStyle(color: Colors.grey.shade800, fontWeight: FontWeight.w600, fontSize: 18.sp),

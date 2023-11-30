@@ -9,7 +9,9 @@ import '../controller/weather_controller.dart';
 
 class LocationListTile extends StatelessWidget {
   String icon;
+  int index;
   void Function()? onTap;
+  void Function()? onLongPress;
   String cityName;
   String weather;
   String humidity;
@@ -18,7 +20,9 @@ class LocationListTile extends StatelessWidget {
   LocationListTile({
     super.key,
     required this.icon,
+    required this.index,
     required this.onTap,
+    required this.onLongPress,
     required this.cityName,
     required this.weather,
     required this.humidity,
@@ -31,6 +35,7 @@ class LocationListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         height: 150.h,
         margin: EdgeInsets.symmetric(
@@ -49,9 +54,23 @@ class LocationListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  cityName.capitalizeFirst.toString(),
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 24.sp),
+                Row(
+                  children: [
+                    Text(
+                      cityName.capitalizeFirst.toString(),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 24.sp),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    index == 0
+                        ? Image.asset(
+                            'assets/location.png',
+                            height: 20.h,
+                            color: Colors.white,
+                          )
+                        : SizedBox(),
+                  ],
                 ),
                 Text(
                   weather,
