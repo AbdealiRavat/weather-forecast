@@ -2,7 +2,8 @@
 
 Weather Forecast App is a Flutter application that provides users with current weather conditions and a forecast for upcoming days. The app utilizes the open-source OpenWeatherMap API to fetch weather data.
 
-![08](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/bedad5d5-774b-4d72-89de-29a901d72a51)
+![08](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/bedad5d5-774b-4d72-89de-29a901d72a51)     ![Screenshot_2023-12-21-14-59-25-42_c3995fee05de960e26ec26b8103e34a5 (https://github.com/AbdealiRavat/weather-forecast/assets/71277590/321ef1bb-8a4a-4b8e-a103-6b4dc712f2e8) ![Screenshot_2023-12-21-14-52-28-49_c3995fee05de960e26ec26b8103e34a5](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/10f4b18e-18ec-4308-9e5d-157eb66bec38) ![Screenshot_2023-12-21-14-48-27-25_c3995fee05de960e26ec26b8103e34a5](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/58a9e487-cfa0-498e-9d00-24eb68017c2a) ![Screenshot_2023-12-21-14-50-50-90_c3995fee05de960e26ec26b8103e34a5](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/14f9c6d6-cbe5-4d33-ae78-4e08d0fc7193)
+
 
 
 ## Features
