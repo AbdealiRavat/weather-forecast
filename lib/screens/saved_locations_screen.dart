@@ -68,6 +68,7 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                 shrinkWrap: true,
                 itemCount: locationListController.locationList.length + 1,
                 physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
                   // for (var location in locationListModel) {
                   //   locationsList.add(location.cityName);
@@ -87,13 +88,6 @@ class _SavedLocationsScreenState extends State<SavedLocationsScreen> {
                           },
                           onLongPress: () {
                             if (index != 0) {
-                              // locationListController.locationList.removeAt(index);
-                              // locationListController.locationWeather.removeAt(index);
-                              // locationListController.locationTemp.removeAt(index);
-                              // locationListController.locationIcon.removeAt(index);
-                              // locationListController.locationHumidty.removeAt(index);
-                              // locationListController.locationWind.removeAt(index);
-                              // setState(() {});
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(Toast('Current Location'));
                             }

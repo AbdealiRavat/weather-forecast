@@ -295,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               Image.asset(
                 'assets/location.png',
-                height: 25.h,
+                height: 22.h,
                 color: Colors.white,
               ),
               SizedBox(
