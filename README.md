@@ -2,6 +2,9 @@
 
 Weather Forecast App is a Flutter application that provides users with current weather conditions and a forecast for upcoming days. The app utilizes the open-source OpenWeatherMap API to fetch weather data.
 
+![08](https://github.com/AbdealiRavat/weather-forecast/assets/71277590/bedad5d5-774b-4d72-89de-29a901d72a51)
+
+
 ## Features
 
 - **Current Weather:** Display the current weather conditions for the user's location.
