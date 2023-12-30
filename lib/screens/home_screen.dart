@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:weather_app/components/forecast_card.dart';
 import 'package:weather_app/components/weather_card.dart';
 import 'package:weather_app/controller/location_list_controller.dart';
@@ -36,7 +35,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   fetchWeather() async {
     String cityName = widget.cityName == null ? await weatherController.getCurrentLocation() : widget.cityName.toString();
     // String cityName = widget.cityName == null ? 'dubai' : widget.cityName.toString();
+    print('fetch error 1');
     try {
+      print('fetch error 2');
       await weatherController.getWeather(cityName).then((value) {
         locationListController.locationHumidty.value.add(weatherController.humidity.toString());
         locationListController.locationTemp.value.add(weatherController.temperature.toString());
@@ -48,8 +49,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         }
       });
     } catch (e) {
-      locationListController.locationList.removeLast();
-      print(locationListController.locationList.length);
+      print('fetch error 3');
+
+      // locationListController.locationList.removeLast();
+      // print(locationListController.locationList.length);
       ScaffoldMessenger.of(context).showSnackBar(Toast('No Such Location Found'));
       // throw e.toString();
     }
@@ -123,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       children: [
                         Text('Updated ', style: TextStyle(fontSize: 15.sp, color: Colors.white)),
                         Text(weatherController.formattedTime.value, style: TextStyle(fontSize: 15.sp, color: Colors.white)),
+                        Text('IST', style: TextStyle(fontSize: 15.sp, color: Colors.white)),
                       ],
                     ),
                     SizedBox(
@@ -169,110 +173,90 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     SizedBox(
                       height: 15.h,
                     ),
-                    Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                        margin: EdgeInsets.symmetric(horizontal: 10.w),
-                        decoration: BoxDecoration(
-                            color: const Color(0xff535353).withOpacity(0.7), borderRadius: BorderRadius.circular(20.r)),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  'Lowest',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  'Highest',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            SfLinearGauge(
-                              minimum: -20,
-                              maximum: 50,
-                              minorTickStyle: LinearTickStyle(length: 5, color: Colors.white),
-                              majorTickStyle: LinearTickStyle(length: 10, color: Colors.white),
-                              axisLabelStyle: TextStyle(color: Colors.white),
-                              showLabels: false,
-                              markerPointers: [
-                                LinearShapePointer(
-                                  height: 8.h,
-                                  width: 5.w,
-                                  position: LinearElementPosition.inside,
-                                  animationType: LinearAnimationType.ease,
-                                  shapeType: LinearShapePointerType.triangle,
-                                  value: weatherController.weatherData.value.main!.tempMin.toDouble(),
-                                  color: Colors.white,
-                                ),
-                                LinearShapePointer(
-                                  height: 8.h,
-                                  width: 8.w,
-                                  position: LinearElementPosition.cross,
-                                  animationType: LinearAnimationType.ease,
-                                  shapeType: LinearShapePointerType.circle,
-                                  value: weatherController.weatherData.value.main!.temp.toDouble(),
-                                  color: Colors.white,
-                                ),
-                                LinearShapePointer(
-                                  height: 8.h,
-                                  width: 5.w,
-                                  position: LinearElementPosition.outside,
-                                  animationType: LinearAnimationType.ease,
-                                  shapeType: LinearShapePointerType.invertedTriangle,
-                                  value: weatherController.weatherData.value.main!.tempMax.toDouble(),
-                                  color: Colors.white,
-                                ),
-                              ],
-                              ranges: <LinearGaugeRange>[
-                                LinearGaugeRange(
-                                  shaderCallback: (bounds) => LinearGradient(
-                                          colors: [Color(0xff0d9dc9), Color(0xff0DC9AB), Color(0xffFFC93E), Color(0xffF45656)])
-                                      .createShader(bounds),
-                                  startValue: -20,
-                                  endValue: 50,
-                                  position: LinearElementPosition.cross,
-                                  // color: Color(0xff0d9dc9)
-                                ),
-                                // LinearGaugeRange(
-                                //     startValue: -10,
-                                //     endValue: 10,
-                                //     position: LinearElementPosition.outside,
-                                //     color: Color(0xff0DC9AB)),
-                                // LinearGaugeRange(
-                                //     startValue: 10,
-                                //     endValue: 20,
-                                //     position: LinearElementPosition.outside,
-                                //     color: Color(0xffFFC93E)),
-                                // LinearGaugeRange(
-                                //     startValue: 20,
-                                //     endValue: 35,
-                                //     position: LinearElementPosition.outside,
-                                //     color: Color(0xffffffff)),
-                                // LinearGaugeRange(
-                                //     startValue: 20,
-                                //     endValue: 100,
-                                //     position: LinearElementPosition.outside,
-                                //     color: Color(0xffF45656)),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  weatherController.weatherData.value.main!.tempMin.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  weatherController.weatherData.value.main!.tempMax.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
+                    // Container(
+                    //     alignment: Alignment.center,
+                    //     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    //     margin: EdgeInsets.symmetric(horizontal: 10.w),
+                    //     decoration: BoxDecoration(
+                    //         color: const Color(0xff535353).withOpacity(0.7), borderRadius: BorderRadius.circular(20.r)),
+                    //     child: Column(
+                    //       children: [
+                    //         const Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Text(
+                    //               'Lowest',
+                    //               style: TextStyle(color: Colors.white),
+                    //             ),
+                    //             Text(
+                    //               'Highest',
+                    //               style: TextStyle(color: Colors.white),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         SfLinearGauge(
+                    //           minimum: -20,
+                    //           maximum: 50,
+                    //           minorTickStyle: LinearTickStyle(length: 5, color: Colors.white),
+                    //           majorTickStyle: LinearTickStyle(length: 10, color: Colors.white),
+                    //           axisLabelStyle: TextStyle(color: Colors.white),
+                    //           showLabels: false,
+                    //           markerPointers: [
+                    //             LinearShapePointer(
+                    //               height: 8.h,
+                    //               width: 5.w,
+                    //               position: LinearElementPosition.inside,
+                    //               animationType: LinearAnimationType.ease,
+                    //               shapeType: LinearShapePointerType.triangle,
+                    //               value: weatherController.weatherData.value.main!.tempMin.toDouble(),
+                    //               color: Colors.white,
+                    //             ),
+                    //             LinearShapePointer(
+                    //               height: 8.h,
+                    //               width: 8.w,
+                    //               position: LinearElementPosition.cross,
+                    //               animationType: LinearAnimationType.ease,
+                    //               shapeType: LinearShapePointerType.circle,
+                    //               value: weatherController.weatherData.value.main!.temp.toDouble(),
+                    //               color: Colors.white,
+                    //             ),
+                    //             LinearShapePointer(
+                    //               height: 8.h,
+                    //               width: 5.w,
+                    //               position: LinearElementPosition.outside,
+                    //               animationType: LinearAnimationType.ease,
+                    //               shapeType: LinearShapePointerType.invertedTriangle,
+                    //               value: weatherController.weatherData.value.main!.tempMax.toDouble(),
+                    //               color: Colors.white,
+                    //             ),
+                    //           ],
+                    //           ranges: <LinearGaugeRange>[
+                    //             LinearGaugeRange(
+                    //               shaderCallback: (bounds) => LinearGradient(
+                    //                       colors: [Color(0xff0d9dc9), Color(0xff0DC9AB), Color(0xffFFC93E), Color(0xffF45656)])
+                    //                   .createShader(bounds),
+                    //               startValue: -20,
+                    //               endValue: 50,
+                    //               position: LinearElementPosition.cross,
+                    //               // color: Color(0xff0d9dc9)
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Text(
+                    //               weatherController.weatherData.value.main!.tempMin.toString(),
+                    //               style: const TextStyle(color: Colors.white),
+                    //             ),
+                    //             Text(
+                    //               weatherController.weatherData.value.main!.tempMax.toString(),
+                    //               style: const TextStyle(color: Colors.white),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     )),
                     SizedBox(
                       height: 15.h,
                     ),

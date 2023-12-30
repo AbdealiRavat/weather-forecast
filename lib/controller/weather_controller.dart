@@ -12,7 +12,8 @@ import 'package:weather_app/models/weather_model.dart';
 
 class WeatherController extends GetxController {
   static String BASE_URL = 'https://api.openweathermap.org/data/2.5/';
-  static String apiKey = 'Your-API-Key';
+  static String apiKey = '7cbbebc44d68e712f02b3e14cee28ce3';
+  // static String apiKey = 'Your-API-Key';
 
   DateTime timeStamp = DateTime.now();
   Rx<WeatherModel> weatherData = WeatherModel().obs;
